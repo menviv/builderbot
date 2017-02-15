@@ -17,5 +17,14 @@
             "name": "Attach to Process",
             "port": 5858
         }
-    ]
+    ],
+    "env": {
+                "NODE_ENV": "development",
+                "MICROSOFT_APP_ID": "49cd3f2d-aecb-44f7-bc0f-43433162048a", 
+                "MICROSOFT_APP_PASSWORD": "iuqJ3QFaTCKkbwjxLCO7SR0"
+            },
+            "externalConsole": false,
+            "sourceMaps": false,
+            "outDir": null
+        
 }
