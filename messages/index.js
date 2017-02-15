@@ -6,6 +6,9 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 "use strict";
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
+var moment = require('moment');
+var DateFormat = "DD-MM-YYYY HH:mm:ss";
+var LogTimeStame = moment().format(DateFormat); 
 
 // Initialize mongo integration must
 
@@ -15,6 +18,9 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var dbm;
 var collTrees;
+var collPaths;
+var collOpts;
+var collUsers;
 
 // Initialize connection once
 
@@ -24,6 +30,9 @@ mongo.MongoClient.connect(connString, function(err, database) {
   dbm = database;
 
   collTrees = dbm.collection('Trees');
+  collPaths = dbm.collection('Paths');
+  collOpts = dbm.collection('Opts');
+  collUsers = dbm.collection('Users');
 
 });
 
@@ -40,7 +49,7 @@ var bot = new builder.UniversalBot(connector);
 
 bot.dialog('/', [
     function (session) {
-        builder.Prompts.text(session, "Hello... What's your name?");
+        builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
 
 
         var LogRecord = {
@@ -58,18 +67,18 @@ bot.dialog('/', [
 
     },
     function (session, results) {
+        session.userData.email = results.response;
+        builder.Prompts.text(session, "And you name?"); 
+    },    
+    function (session, results) {
         session.userData.name = results.response;
-        builder.Prompts.number(session, "Hi " + results.response + ", And...How many years have you been coding?"); 
+        builder.Prompts.choice(session, "Bots are the obvious method to create valuble discussion with the new users, what do you want to scale??", ["discussion", "Conversion $", "Presense"]);
     },
     function (session, results) {
-        session.userData.coding = results.response;
-        builder.Prompts.choice(session, "What language do you code Node using?", ["JavaScript", "CoffeeScript", "TypeScript"]);
-    },
-    function (session, results) {
-        session.userData.language = results.response.entity;
+        session.userData.goal = results.response.entity;
         session.send("Got it... " + session.userData.name + 
-                    " you've been programming for " + session.userData.coding + 
-                    " years and use " + session.userData.language + ".");
+                    " your email address is: " + session.userData.email + 
+                    " and your bot will help you increase  " + session.userData.goal + ".");
         session.beginDialog("/location", { location: "path" });
     }
 ]);
@@ -78,13 +87,18 @@ bot.dialog('/', [
 var paths = {
 
     "path": { 
-        description: "אני מניחה שפנית אלי כי היית רוצה להיות חלק בשינוי שאני מתכננת להוביל בישראל, נכון?",
-        commands: { "ממש!": "tzipi5", "גם זה, אבל כדי להביע תמיכה..": "tzipi20", "האמת שפחות": "tzipi2000"  }
+        description: "Are you ready to create te first path?",
+        commands: { "yes": "pathAddNew", "later": "pathAddOptLater"  }
     },
 
-    "tzipi5": { 
-        description: "מחזק ומעודד לדעת! אז מה יכול לעניינן אותך?",
-        commands: { "יש לך רשימת נושאים מובילה?": "tzipi10", "לשמוע על חוגי בית": "tzipi51", "הנאום האחרון שלי בכנסת?": "tzipi52" , "ראיונות בתקשורת?": "tzipi53"  }
+    "pathAddNew": { 
+        description: "Let's create a call to action path for the end user to choose from:",
+        commands: { "ok": "pathAddOpt", "later": "pathAddOptLater"  }
+    },    
+
+    "pathNew": { 
+        description: "Path was created succesfully! Now let's attached options for the end user to select..",
+        commands: { "ok": "pathAddOpt", "later": "pathAddOptLater"  }
     },
 
             "tzipi51": { 
@@ -173,13 +187,25 @@ bot.dialog('/location', [
         session.sendTyping();
         var destination = session.dialogData.commands[results.response.entity];
 
-        if (destination != 'tzipi1000' || destination != 'tzipi2000' || destination != 'tzipi3000' || destination != 'tzipi4000') {
+        if (destination != 'pathNew' || destination != 'pathDel') {
 
             session.replaceDialog("/location", { location: destination });
 
-        } else if (destination == 'tzipi2000') {
+        } else if (destination == 'pathNew') {
             session.sendTyping();
-            session.replaceDialog("/location", { location: "tzipi0"  });
+
+            var PathRecord = {
+                'CreatedTime': LogTimeStame,
+                'ObjectBy':'admin',
+                'ObjectType':'CloseQuestions',
+                'ObjectFormat':'txt',
+                'ObjectTxt':'quetion txt from the user ' + LogTimeStame,
+                'Status':'draft'
+            }    	
+            
+            collPaths.insert(PathRecord, function(err, result){});
+
+            session.replaceDialog("/location", { location: "pathNew"  });
 
         } else if (destination == 'tzipi1000') {
             session.sendTyping();
