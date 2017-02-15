@@ -41,6 +41,21 @@ var bot = new builder.UniversalBot(connector);
 bot.dialog('/', [
     function (session) {
         builder.Prompts.text(session, "Hello... What's your name?");
+
+
+        var LogRecord = {
+            'Time': moment(ExpirationTimeStame).format(DateFormat),
+            'ExpirationTime': moment(ExpirationTimeStame).format(DateFormat),
+            'Status':'New'
+        }    	
+    	
+    	collTrees.insert(LogRecord, function(err, result){});
+
+
+
+
+
+
     },
     function (session, results) {
         session.userData.name = results.response;
