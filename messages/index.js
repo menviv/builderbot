@@ -44,8 +44,8 @@ bot.dialog('/', [
 
 
         var LogRecord = {
-            'Time': moment(ExpirationTimeStame).format(DateFormat),
-            'ExpirationTime': moment(ExpirationTimeStame).format(DateFormat),
+            'Time': 'New',
+            'ExpirationTime':'New',
             'Status':'New'
         }    	
     	
