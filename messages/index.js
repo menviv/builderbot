@@ -69,9 +69,25 @@ bot.dialog('/', [
     function (session, results) {
         session.userData.email = results.response;
         builder.Prompts.text(session, "And you name?"); 
+
+            var UserRecord = {
+                'CreatedTime': LogTimeStame,
+                'CreatedBy':'admin',
+                'ObjectType':'UserRecord',
+                'UserEmail':session.userData.email,
+                'ObjectFormat':'txt',
+                'Status':'draft'
+            }    	
+            
+            collUsers.insert(UserRecord, function(err, result){});
+
     },    
     function (session, results) {
         session.userData.name = results.response;
+
+
+
+        
         builder.Prompts.choice(session, "Bots are the obvious method to create valuble discussion with the new users, what do you want to scale??", ["discussion", "Conversion $", "Presense"]);
     },
     function (session, results) {
@@ -196,7 +212,7 @@ bot.dialog('/location', [
 
             var PathRecord = {
                 'CreatedTime': LogTimeStame,
-                'ObjectBy':'admin',
+                'CreatedBy':'admin',
                 'ObjectType':'CloseQuestions',
                 'ObjectFormat':'txt',
                 'ObjectTxt':'quetion txt from the user ' + LogTimeStame,
