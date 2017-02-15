@@ -6,6 +6,9 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 "use strict";
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
+
+// Initialize mongo integration
+
 var mongo = require('mongodb');
 var connString = 'mongodb://bot:bot@ds056979.mlab.com:56979/builderbot';
 var MongoClient = require('mongodb').MongoClient;
