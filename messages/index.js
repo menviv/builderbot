@@ -167,7 +167,12 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){});
 
-            builder.Prompts.text(session, "Thank you for sharing this information with me. Ready to start your first bot?"); 
+            session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
+
+            session.send("Got it... " + session.userData.name + 
+            " your email address is: " + session.userData.email + 
+            " and your bot will help you increase  " + session.userData.goal + ".");
+            session.beginDialog("/location", { location: "path" });
 
         }
 
@@ -175,10 +180,7 @@ bot.dialog('/', [
         RegisterNewUser();
 
         
-        session.send("Got it... " + session.userData.name + 
-                    " your email address is: " + session.userData.email + 
-                    " and your bot will help you increase  " + session.userData.goal + ".");
-        session.beginDialog("/location", { location: "path" });
+
     }
 ]);
 
