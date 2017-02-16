@@ -47,6 +47,11 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 
 var bot = new builder.UniversalBot(connector);
 
+var UserEmail;
+var UserName;
+var UserGoal;
+
+
 bot.dialog('/', [
     function (session) {
         builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
@@ -67,31 +72,106 @@ bot.dialog('/', [
 
     },
     function (session, results) {
-        session.userData.email = results.response;
-        builder.Prompts.text(session, "And you name?"); 
+
+        UserEmail = results.response;
+
+        function AllocateUserEmail() {
+                
+                var cursor = collUsers.find({"UserEmail": UserEmail});
+                var result = [];
+                cursor.each(function(err, doc) {
+                    if(err)
+                        throw err;
+                    if (doc === null) {
+                        // doc is null when the last document has been processed
+
+                        if (result.length < 1) {
+
+                            NonRegisteredUser();
+
+                        } else {
+
+                            UserExistsByEmail();
+
+                            UserName = result[0].UserName;
+                            UserGoal = result[0].UserGoal;
+
+                        }
+                        
+                        return;
+                    }
+                    // do something with each doc, like push Email into a results array
+                    result.push(doc);
+                });
+            
+        }
+
+
+        function RegisterNewUser() {
 
             var UserRecord = {
                 'CreatedTime': LogTimeStame,
                 'CreatedBy':'admin',
                 'ObjectType':'UserRecord',
-                'UserEmail':session.userData.email,
+                'UserEmail':UserName,
+                'UserEmail':UserEmail,
+                'UserEmail':UserGoal,
                 'ObjectFormat':'txt',
                 'Status':'draft'
             }    	
             
             collUsers.insert(UserRecord, function(err, result){});
 
+            builder.Prompts.text(session, "Thank you for sharing this information with me. Ready to start your first bot?"); 
+
+        }
+
+        function NonRegisteredUser() {
+
+            var UserRecord = {
+                'CreatedTime': LogTimeStame,
+                'CreatedBy':'admin',
+                'ObjectType':'UserRecord',
+                'UserEmail':UserEmail,
+                'ObjectFormat':'txt',
+                'Status':'draft'
+            }    	
+            
+            collUsers.insert(UserRecord, function(err, result){});
+
+            builder.Prompts.text(session, "And you name?"); 
+
+        }
+
+        function UserExistsByEmail() {
+
+            session.userData.email = results.response;
+            session.userData.name = UserName;
+            session.userData.goal = UserGoal;
+            builder.Prompts.text(session, "Good to have you back with me! Are you ready to scale your bot?"); 
+
+         }
+
+
+
     },    
     function (session, results) {
-        session.userData.name = results.response;
+
+        UserName = results.response;
+        session.userData.name = UserName;
 
 
 
-        
+
         builder.Prompts.choice(session, "Bots are the obvious method to create valuble discussion with the new users, what do you want to scale??", ["discussion", "Conversion $", "Presense"]);
     },
     function (session, results) {
-        session.userData.goal = results.response.entity;
+
+        UserGoal = results.response.entity;
+
+        RegisterNewUser();
+
+        session.userData.goal = UserGoal
         session.send("Got it... " + session.userData.name + 
                     " your email address is: " + session.userData.email + 
                     " and your bot will help you increase  " + session.userData.goal + ".");
