@@ -75,6 +75,8 @@ bot.dialog('/', [
 
         UserEmail = results.response;
 
+        AllocateUserEmail();
+
         function AllocateUserEmail() {
                 
                 var cursor = collUsers.find({"UserEmail": UserEmail});
