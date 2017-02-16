@@ -75,6 +75,8 @@ bot.dialog('/', [
 
         UserEmail = results.response;
 
+        session.send("Thank you" + UserEmail);
+
         AllocateUserEmail();
 
         function AllocateUserEmail() {
