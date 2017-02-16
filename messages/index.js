@@ -150,15 +150,17 @@ bot.dialog('/', [
 
         UserGoal = results.response.entity;
 
+        session.userData.goal = UserGoal;
+
         function RegisterNewUser() {
 
             var UserRecord = {
                 'CreatedTime': LogTimeStame,
                 'CreatedBy':'admin',
                 'ObjectType':'UserRecord',
-                'UserEmail':UserName,
+                'UserName':UserName,
                 'UserEmail':UserEmail,
-                'UserEmail':UserGoal,
+                'UserGoal':UserGoal,
                 'ObjectFormat':'txt',
                 'Status':'draft'
             }    	
@@ -172,7 +174,7 @@ bot.dialog('/', [
 
         RegisterNewUser();
 
-        session.userData.goal = UserGoal
+        
         session.send("Got it... " + session.userData.name + 
                     " your email address is: " + session.userData.email + 
                     " and your bot will help you increase  " + session.userData.goal + ".");
