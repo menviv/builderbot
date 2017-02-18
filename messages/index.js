@@ -299,9 +299,10 @@ bot.dialog('/location', [
     },
     function (session, results) {
         session.sendTyping();
+        
         var destination = session.dialogData.commands[results.response.entity];
 
-        if (destination != 'pathAddNew' || destination != 'pathDel') {
+        if (destination != 'pathAddNew') {
 
             session.replaceDialog("/location", { location: destination });
 
@@ -311,7 +312,7 @@ bot.dialog('/location', [
 
             session.endDialog("Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
 
-            session.beginDialog("/pathNew_Prompts");
+            session.beginDialog('/pathNew_Prompts');
 
         } else if (destination == 'tzipi1000') {
             session.sendTyping();
