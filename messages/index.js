@@ -56,7 +56,7 @@ var nAnswersCounter = parseInt("1");
 
 
 
-var instructions = 'Welcome to the Bot to showcase the DirectLine API. Send \'Show me a hero card\' or \'Send me a BotFramework image\' to see how the DirectLine client supports custom channel data. Any other message will be echoed.';
+var instructions = 'Welcome to BuilderBot! This is an ALPHA version for a mighty efficiant Bot to scale the process of planning a new bot or to enhance an existing one. to showcase the DirectLine: Send \'myBot\' to see the list of questions or \'myUsers\' to see how the list of regitered users. Any other message will be echoed.';
 
 bot.on('conversationUpdate', function (activity) {
     if (activity.membersAdded) {
@@ -71,7 +71,7 @@ bot.on('conversationUpdate', function (activity) {
     }
 });
 
-bot.dialog('/', function (session) {
+bot.dialog('/default', function (session) {
 
     var reply = new builder.Message()
         .address(session.message.address);
@@ -115,7 +115,7 @@ bot.dialog('/', function (session) {
 
 
 
-bot.dialog('/sss', [
+bot.dialog('/', [
     function (session) {
         builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
 
