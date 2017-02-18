@@ -309,9 +309,9 @@ bot.dialog('/location', [
 
             session.sendTyping();
 
-            session.send("Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
+            session.endDialog("Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
 
-            session.replaceDialog("/pathNew_Prompts", {});
+            session.beginDialog("/pathNew_Prompts");
 
         } else if (destination == 'tzipi1000') {
             session.sendTyping();
