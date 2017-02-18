@@ -50,6 +50,9 @@ var bot = new builder.UniversalBot(connector);
 var UserEmail;
 var UserName;
 var UserGoal;
+var UserID;
+var PathID;
+var nAnswersCounter = parseInt("1");
 
 
 bot.dialog('/', [
@@ -99,6 +102,7 @@ bot.dialog('/', [
 
                             UserName = result[0].UserName;
                             UserGoal = result[0].UserGoal;
+                            UserID = result[0]._id;
 
                         }
                         
@@ -167,7 +171,13 @@ bot.dialog('/', [
                 'Status':'draft'
             }    	
             
-            collUsers.insert(UserRecord, function(err, result){});
+            collUsers.insert(UserRecord, function(err, result){
+
+                UserID = result[0]._id;
+
+            });
+
+            
 
             session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
 
@@ -295,20 +305,12 @@ bot.dialog('/location', [
             session.replaceDialog("/location", { location: destination });
 
         } else if (destination == 'pathNew') {
+
             session.sendTyping();
 
-            var PathRecord = {
-                'CreatedTime': LogTimeStame,
-                'CreatedBy':'admin',
-                'ObjectType':'CloseQuestions',
-                'ObjectFormat':'txt',
-                'ObjectTxt':'quetion txt from the user ' + LogTimeStame,
-                'Status':'draft'
-            }    	
-            
-            collPaths.insert(PathRecord, function(err, result){});
+            builder.send(session, "Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
 
-            session.replaceDialog("/location", { location: "pathNew"  });
+            session.beginDialog("/pathNew_Prompts");
 
         } else if (destination == 'tzipi1000') {
             session.sendTyping();
@@ -328,8 +330,90 @@ bot.dialog('/location', [
 ]);
 
 
+bot.dialog('/pathNew_Prompts', [
+    function (session) {
+
+            builder.Prompts.text(session, "Your first question will be: "); 
+
+       // builder.Prompts.choice(session, "Which region would you like sales for?", salesData); 
+    },
+    function (session, results) {
+
+        if (results.response) {
+
+            var PathRecord = {
+                'CreatedTime': LogTimeStame,
+                'UserID': UserID,
+                'CreatedBy':UserName,
+                'CreatedByEmail':UserEmail,
+                'ObjectType':'CloseQuestions',
+                'ObjectFormat':'txt',
+                'ObjectTxt':results.response,
+                'Status':'draft'
+            }    	
+            
+            collPaths.insert(PathRecord, function(err, result){
+
+                PathID = result[0]._id;
+
+            });
+
+            session.beginDialog("/pathNew_Prompts_Answers");
+
+            //var region = salesData[results.response.entity];
+            session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
+        } else {
+            session.send("ok");
+        }
+    }
+]);
 
 
+
+
+
+bot.dialog('/pathNew_Prompts_Answers', [
+    function (session) {
+
+            
+
+            builder.Prompts.text(session, "Your " + nAnswersCounter + "choice for answer will be: "); 
+
+       // builder.Prompts.choice(session, "Which region would you like sales for?", salesData); 
+    },
+    function (session, results) {
+
+        if (results.response) {
+
+            var PathRecord = {
+                'CreatedTime': LogTimeStame,
+                'PathID': PathID,
+                'UserID': UserID,
+                'CreatedBy':UserName,
+                'CreatedByEmail':UserEmail,
+                'ObjectType':'CloseQuestions',
+                'ObjectFormat':'txt',
+                'ObjectTxt':results.response,
+                'Status':'draft'
+            }    	
+            
+            collOpts.insert(PathRecord, function(err, result){
+
+                OptID = result[0]._id;
+
+                nAnswersCounter = nAnswersCounter + 1;
+
+            });
+
+            session.beginDialog("/pathNew_Prompts_Answers_verify_Next_choice");
+
+            //var region = salesData[results.response.entity];
+            session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
+        } else {
+            session.send("ok");
+        }
+    }
+]);
 
 
 
