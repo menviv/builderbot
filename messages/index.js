@@ -55,6 +55,12 @@ var PathID;
 var nAnswersCounter = parseInt("1");
 
 
+
+bot.add('/life', builder.DialogAction.validatedPrompt(builder.PromptType.text, function (response) {
+    return response === '42';
+}));
+
+
 bot.dialog('/', [
     function (session) {
         builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
