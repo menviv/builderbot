@@ -173,7 +173,8 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){
 
-                UserID = result[0]._id;
+                //UserID = result[0]._id;
+                session.send("Got it... " + result.length);
 
             });
 
