@@ -202,10 +202,10 @@ var paths = {
 
     "path": { 
         description: "Are you ready to create te first path?",
-        commands: { "yes": "pathAddNew", "later": "pathAddOptLater"  }
+        commands: { "yes": "pathAddNew", "later": "pathAddNewLater"  }
     },
 
-    "pathAddNew": { 
+    "pathAddNewLater": { 
         description: "Let's create a call to action path for the end user to choose from:",
         commands: { "ok": "pathAddOpt", "later": "pathAddOptLater"  }
     },    
