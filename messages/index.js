@@ -301,11 +301,11 @@ bot.dialog('/location', [
         session.sendTyping();
         var destination = session.dialogData.commands[results.response.entity];
 
-        if (destination != 'pathNew' || destination != 'pathDel') {
+        if (destination != 'pathAddNew' || destination != 'pathDel') {
 
             session.replaceDialog("/location", { location: destination });
 
-        } else if (destination == 'pathNew') {
+        } else if (destination == 'pathAddNew') {
 
             session.sendTyping();
 
