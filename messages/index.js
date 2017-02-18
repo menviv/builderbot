@@ -58,6 +58,18 @@ var nAnswersCounter = parseInt("1");
 
 var instructions = 'Welcome to the Bot to showcase the DirectLine API. Send \'Show me a hero card\' or \'Send me a BotFramework image\' to see how the DirectLine client supports custom channel data. Any other message will be echoed.';
 
+bot.on('conversationUpdate', function (activity) {
+    if (activity.membersAdded) {
+        activity.membersAdded.forEach((identity) => {
+            if (identity.id === activity.address.bot.id) {
+                var reply = new builder.Message()
+                    .address(activity.address)
+                    .text(instructions);
+                bot.send(reply);
+            }
+        });
+    }
+});
 
 bot.dialog('/', function (session) {
 
