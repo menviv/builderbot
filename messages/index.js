@@ -71,7 +71,7 @@ bot.on('conversationUpdate', function (activity) {
     }
 });
 
-bot.dialog('/default', function (session) {
+bot.dialog('/dddd', function (session) {
 
     var reply = new builder.Message()
         .address(session.message.address);
@@ -102,6 +102,8 @@ bot.dialog('/default', function (session) {
 
     session.send(reply);
 
+    
+
 });
 
 
@@ -117,6 +119,41 @@ bot.dialog('/default', function (session) {
 
 bot.dialog('/', [
     function (session) {
+
+
+    var reply = new builder.Message()
+        .address(session.message.address);
+
+    var text = session.message.text.toLocaleLowerCase();
+    switch (text) {
+        case 'show me a hero card':
+            reply.text('Sample message with a HeroCard attachment')
+                .addAttachment(new builder.HeroCard(session)
+                    .title('Sample Hero Card')
+                    .text('Displayed in the DirectLine client'));
+            break;
+
+        case 'send me a botframework image':
+            reply.text('Sample message with an Image attachment')
+                .addAttachment({
+                    contentUrl: 'https://docs.botframework.com/en-us/images/faq-overview/botframework_overview_july.png',
+                    contentType: 'image/png',
+                    name: 'BotFrameworkOverview.png'
+                });
+
+            break;
+
+        default:
+            reply.text('You said \'' + session.message.text + '\'');
+            break;
+    }
+
+    session.send(reply);
+
+
+
+
+
         builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
 
 
