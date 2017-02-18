@@ -309,7 +309,7 @@ bot.dialog('/location', [
 
             session.sendTyping();
 
-            builder.send(session, "Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
+            session.send(session, "Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
 
             session.beginDialog("/pathNew_Prompts");
 
@@ -359,10 +359,12 @@ bot.dialog('/pathNew_Prompts', [
 
             });
 
+            session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding 3-4 possibilities..."); 
+
             session.beginDialog("/pathNew_Prompts_Answers");
 
             //var region = salesData[results.response.entity];
-            session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
+            
         } else {
             session.send("ok");
         }
