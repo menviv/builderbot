@@ -171,10 +171,10 @@ bot.dialog('/', [
                 'Status':'draft'
             }    	
             
-            collUsers.insert(UserRecord, function(err, result){
+            collUsers.insert(UserRecord, function(err, responseDoc){
 
-                //UserID = result[0]._id;
-                session.send("Got it... " + result.length);
+                UserID = responseDoc[0]._id;
+                //session.send("Got it... " + result.length);
 
             });
 
