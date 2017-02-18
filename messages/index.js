@@ -56,9 +56,16 @@ var nAnswersCounter = parseInt("1");
 
 
 
-bot.dialog('/life', builder.DialogAction.validatedPrompt(builder.PromptType.text, function (response) {
-    return response === '42';
-}));
+bot.DialogAction('/life', [
+
+        function (session) {
+
+            session.send("jfkldsj fhjdkshfkjd fhjdkshfkj"); 
+
+        }
+
+    
+]);
 
 
 bot.dialog('/', [
