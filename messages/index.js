@@ -182,9 +182,9 @@ bot.dialog('/', [
 
             session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
 
-            session.send("Got it... " + session.userData.name + 
-            " your email address is: " + session.userData.email + 
-            " and your bot will help you increase  " + session.userData.goal + ".");
+           // session.send("Got it... " + session.userData.name + 
+           // " your email address is: " + session.userData.email + 
+           // " and your bot will help you increase  " + session.userData.goal + ".");
             session.beginDialog("/location", { location: "path" });
 
         }
@@ -355,7 +355,7 @@ bot.dialog('/pathNew_Prompts', [
             
             collPaths.insert(PathRecord, function(err, result){
 
-                PathID = result[0]._id;
+                PathID = result._id;
 
             });
 
@@ -386,7 +386,7 @@ bot.dialog('/pathNew_Prompts_Answers', [
 
         if (results.response) {
 
-            var PathRecord = {
+            var OptRecord = {
                 'CreatedTime': LogTimeStame,
                 'PathID': PathID,
                 'UserID': UserID,
@@ -398,9 +398,9 @@ bot.dialog('/pathNew_Prompts_Answers', [
                 'Status':'draft'
             }    	
             
-            collOpts.insert(PathRecord, function(err, result){
+            collOpts.insert(OptRecord, function(err, result){
 
-                OptID = result[0]._id;
+                OptID = result._id;
 
                 nAnswersCounter = nAnswersCounter + 1;
 
