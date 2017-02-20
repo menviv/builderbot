@@ -292,7 +292,12 @@ bot.dialog('/', [
         
 
     }
-]);
+]).beginDialogAction('checkoutAction', 'checkoutDialog', { matches: /checkout/i });
+
+// Dialog for checking out
+    bot.dialog('checkoutDialog', function (session) {
+        session.send("Got it... ");
+    });
 
 
 var paths = {
