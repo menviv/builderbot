@@ -401,9 +401,12 @@ bot.dialog('/location', [
     },
     
     function (session, results) {
+        
         session.sendTyping();
         
         var destination = session.dialogData.commands[results.response.entity];
+
+        session.send("Got it... " + destination);
 
         if (destination != 'pathAddNew') {
 
@@ -413,9 +416,10 @@ bot.dialog('/location', [
 
             session.sendTyping();
 
-            session.endDialog("Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
+           // session.endDialog("Let's start by creating PROMPTS based question. My advice is to ask short and simplae questions. Example: what is your name?"); 
 
             session.beginDialog('/pathNew_Prompts');
+            
 
         } else if (destination == 'pathNew_Prompts_Answers') {
 
