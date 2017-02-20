@@ -595,7 +595,9 @@ bot.dialog('/myPaths', [
            //     })
 
                 
-                session.send(result);
+               // session.send(result);
+
+               session.send("gfhdsgfhdsgfgdhsgfghds");
                 return;
             }
             // do something with each doc, like push Email into a results array
