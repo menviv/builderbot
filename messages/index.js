@@ -531,7 +531,7 @@ bot.dialog('/pathNew_Prompts_Answers', [
             session.send("ok");
         }
     }
-]).beginDialogAction('pathsAction', 'myPaths', { matches: /paths/i });
+]).beginDialogAction('myPathsAction', 'myPaths', { matches: /myPaths/i });
   
 
 
