@@ -599,7 +599,7 @@ bot.dialog('/myPaths', [
 
                var nresultLen = result.length;
 
-               for (i=0; i<nresultLen; i++ ) {
+               for (var i=0; i<nresultLen; i++ ) {
 
                    session.send("results: " + result[i].ObjectTxt);
 
