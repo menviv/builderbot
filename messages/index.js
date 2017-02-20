@@ -312,9 +312,9 @@ var paths = {
         commands: { "ok": "pathAddOpt", "later": "pathAddOptLater"  }
     },    
 
-    "pathNew": { 
-        description: "Path was created succesfully! Now let's attached options for the end user to select..",
-        commands: { "ok": "pathAddOpt", "later": "pathAddOptLater"  }
+    "NextOpt": { 
+        description: "Would you like to add another answers?",
+        commands: { "yes": "pathNew_Prompts_Answers", "no": "myPaths"  }
     },
 
             "tzipi51": { 
@@ -521,9 +521,12 @@ bot.dialog('/pathNew_Prompts_Answers', [
 
             });
 
-            session.endDialog();
+            session.sendTyping();
+            session.replaceDialog("/location", { location: "NextOpt"  });
 
-            session.beginDialog("/pathNew_Prompts_Answers");
+            //session.endDialog();
+
+            //session.beginDialog("/pathNew_Prompts_Answers");
 
             //var region = salesData[results.response.entity];
             //session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
