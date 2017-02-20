@@ -419,7 +419,7 @@ bot.dialog('/location', [
 
         } else if (destination == 'pathNew_Prompts_Answers') {
 
-            session.endDialog();
+            //session.endDialog();
 
             session.beginDialog("/pathNew_Prompts_Answers");
 
@@ -427,7 +427,7 @@ bot.dialog('/location', [
 
             session.sendTyping();
 
-            session.endDialog();
+          //  session.endDialog();
 
             session.beginDialog("myPaths");
 
