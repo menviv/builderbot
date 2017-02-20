@@ -464,6 +464,8 @@ bot.dialog('/pathNew_Prompts', [
 
             session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding 3-4 possibilities..."); 
 
+            session.endDialog();
+
             session.beginDialog("/pathNew_Prompts_Answers");
 
             //var region = salesData[results.response.entity];
@@ -481,9 +483,17 @@ bot.dialog('/pathNew_Prompts', [
 bot.dialog('/pathNew_Prompts_Answers', [
     function (session) {
 
-            
+            if (nAnswersCounter == 1) {
 
-            builder.Prompts.text(session, "Your " + nAnswersCounter + "choice for answer will be: "); 
+                builder.Prompts.text(session, "Your " + nAnswersCounter + "choice for answer will be: "); 
+
+            } else {
+
+                builder.Prompts.text(session, "Next, your " + nAnswersCounter + "choice for answer will be: "); 
+
+            }
+
+            
 
        // builder.Prompts.choice(session, "Which region would you like sales for?", salesData); 
     },
@@ -511,15 +521,47 @@ bot.dialog('/pathNew_Prompts_Answers', [
 
             });
 
-            session.beginDialog("/pathNew_Prompts_Answers_verify_Next_choice");
+            session.endDialog();
+
+            session.beginDialog("/pathNew_Prompts_Answers");
 
             //var region = salesData[results.response.entity];
-            session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
+            //session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
         } else {
             session.send("ok");
         }
     }
-]);
+]).beginDialogAction('pathNew_PromptsAction', 'pathNew_Prompts', { matches: /new/i })
+  .beginDialogAction('myPathsAction', 'myPaths', { matches: /mypaths/i });
+
+
+// Dialog for myquestions 
+bot.dialog('myPaths', function (session) {
+
+    var cursor = collPaths.find({"UserID": UserID});
+    var result = [];
+    cursor.each(function(err, doc) {
+        if(err)
+            throw err;
+        if (doc === null) {
+            // doc is null when the last document has been processed
+
+            result.sort(function(a, b){
+            var dateA=new Date(a.CreatedTime), dateB=new Date(b.CreatedTime)
+            //return dateB-dateA //sort by date ascending
+            return dateA-dateB //sort by date decending
+            })
+
+            session.send("Your paths: ");
+            session.send(result);
+            return;
+        }
+        // do something with each doc, like push Email into a results array
+        result.push(doc);
+    });
+
+    
+});
 
 
 
