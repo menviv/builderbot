@@ -399,6 +399,7 @@ bot.dialog('/location', [
         session.dialogData.commands = location.commands;
         builder.Prompts.choice(session, location.description, location.commands);
     },
+    
     function (session, results) {
         session.sendTyping();
         
@@ -416,17 +417,19 @@ bot.dialog('/location', [
 
             session.beginDialog('/pathNew_Prompts');
 
-        } else if (destination == 'tzipi1000') {
-            session.sendTyping();
-            session.endDialog("תודה על הנכונות להקשיב, זה לא מובן מאליו");
-            session.userData.profile = '';
-            session.endConversation();
-            session.beginDialog("/location", { location: "tzipi0" });
+        } else if (destination == 'pathNew_Prompts_Answers') {
 
-        } else if (destination == 'tzipi3000') {
+            session.endDialog();
+
+            session.beginDialog("/pathNew_Prompts_Answers");
+
+        } else if (destination == 'myPaths') {
 
             session.sendTyping();
-            session.replaceDialog("/location", { location: "tzipi5"  });
+
+            session.endDialog();
+
+            session.beginDialog("myPaths");
 
         }
         
