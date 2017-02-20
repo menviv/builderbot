@@ -532,11 +532,13 @@ bot.dialog('/pathNew_Prompts_Answers', [
         }
     }
 ]).beginDialogAction('pathNew_PromptsAction', 'pathNew_Prompts', { matches: /new/i })
-  .beginDialogAction('myPathsAction', 'myPaths', { matches: /mypaths/i });
+  .beginDialogAction('myPathsAction', 'myPaths', { matches: /paths/i });
 
 
 // Dialog for myquestions 
 bot.dialog('myPaths', function (session) {
+
+    session.send("Your paths: ");
 
     var cursor = collPaths.find({"UserID": UserID});
     var result = [];
@@ -552,7 +554,7 @@ bot.dialog('myPaths', function (session) {
             return dateA-dateB //sort by date decending
             })
 
-            session.send("Your paths: ");
+            
             session.send(result);
             return;
         }
