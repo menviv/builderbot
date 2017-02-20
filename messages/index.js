@@ -281,6 +281,8 @@ bot.dialog('/', [
             collUsers.insert(UserRecord, function(err, responseDoc){
 
                 UserID = responseDoc._id;
+
+                session.userData.userid = responseDoc._id;
                 //session.send("Got it... " + result.length);
 
             });
@@ -464,7 +466,7 @@ bot.dialog('/pathNew_Prompts', [
 
             var PathRecord = {
                 'CreatedTime': LogTimeStame,
-                'UserID': UserID,
+                'UserID': session.userData.userid,
                 'CreatedBy':UserName,
                 'CreatedByEmail':UserEmail,
                 'ObjectType':'CloseQuestions',
