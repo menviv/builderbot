@@ -229,6 +229,8 @@ bot.dialog('/', [
 
                 session.userData.userid = result._id;
 
+                session.send("New user created: " + session.userData.userid);
+
                 UserID = session.userData.userid;
 
                 session.userData.email = UserEmail;
