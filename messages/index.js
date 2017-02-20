@@ -597,7 +597,15 @@ bot.dialog('/myPaths', [
                 
                // session.send(result);
 
-               session.send("gfhdsgfhdsgfgdhsgfghds");
+               var nresultLen = result.length;
+
+               for (i=0; i<nresultLen; i++ ) {
+
+                   session.send("results: " + result[i].ObjectTxt);
+
+               }
+
+             //  session.send("gfhdsgfhdsgfgdhsgfghds");
                 return;
             }
             // do something with each doc, like push Email into a results array
