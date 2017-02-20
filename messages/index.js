@@ -175,6 +175,8 @@ bot.dialog('/', [
 
         UserEmail = results.response;
 
+        session.userData.email = UserEmail;
+
         session.send("Thank you" + UserEmail);
 
         AllocateUserEmail();
@@ -223,7 +225,15 @@ bot.dialog('/', [
                 'Status':'draft'
             }    	
             
-            collUsers.insert(UserRecord, function(err, result){});
+            collUsers.insert(UserRecord, function(err, result){
+
+                session.userData.userid = result._id;
+
+                UserID = session.userData.userid;
+
+                session.userData.email = UserEmail;
+
+            });
 
             builder.Prompts.text(session, "And you name?"); 
 
