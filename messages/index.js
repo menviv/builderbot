@@ -150,25 +150,7 @@ bot.dialog('/', [
 
     session.send(reply);
 
-
-
-
-
         builder.Prompts.text(session, "Welcome to BuilderBot... I'm here to help you build and configure my son Bot :), but first: What's your email?");
-
-
-        var LogRecord = {
-            'Time': 'New',
-            'ExpirationTime':'New',
-            'Status':'New'
-        }    	
-    	
-    	collTrees.insert(LogRecord, function(err, result){});
-
-
-
-
-
 
     },
     function (session, results) {
@@ -227,13 +209,13 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){
 
-                session.userData.userid = result._id;
+                //session.userData.userid = result._id;
 
-                session.send("New user created: " + session.userData.userid);
+                UserID = result._id;
 
-                UserID = session.userData.userid;
+                session.send("New user created: " + UserID);
 
-                session.userData.email = UserEmail;
+                //session.userData.email = UserEmail;
 
             });
 
