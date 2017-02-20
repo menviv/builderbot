@@ -401,7 +401,7 @@ bot.dialog('/location', [
     },
     
     function (session, results) {
-        
+
         session.sendTyping();
         
         var destination = session.dialogData.commands[results.response.entity];
@@ -529,11 +529,11 @@ bot.dialog('/pathNew_Prompts_Answers', [
             });
 
             session.sendTyping();
-            session.replaceDialog("/location", { location: "NextOpt"  });
+            //session.replaceDialog("/location", { location: "NextOpt"  });
 
-            //session.endDialog();
+            session.endDialog();
 
-            //session.beginDialog("/pathNew_Prompts_Answers");
+            session.beginDialog("/post_adding_pathNew_Prompts_Answers");
 
             //var region = salesData[results.response.entity];
             //session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding tje 3-4 possibilities..."); 
@@ -543,6 +543,37 @@ bot.dialog('/pathNew_Prompts_Answers', [
     }
 ]).beginDialogAction('myPathsAction', 'myPaths', { matches: /myPaths/i });
   
+
+
+bot.dialog('/post_adding_pathNew_Prompts_Answers', [
+    function (session) {
+
+        builder.Prompts.choice(session, "Would you like to add another answers?", ["Yes", "Review My Paths", "No"]);
+
+       // builder.Prompts.choice(session, "Which region would you like sales for?", salesData); 
+    },
+    function (session, results) {
+
+        var NextStep = results.response.entity;
+
+            session.endDialog();
+
+            if (NextStep == 'Yes') {
+
+                session.beginDialog("/pathNew_Prompts_Answers");
+
+            } else if (NextStep == 'Review My Paths') {
+
+                session.beginDialog("/myPaths");
+
+            }
+            
+    }
+]);
+
+
+
+
 
 
 // Dialog for myquestions 
