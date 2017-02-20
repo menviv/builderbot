@@ -575,36 +575,45 @@ bot.dialog('/post_adding_pathNew_Prompts_Answers', [
 
 
 
+bot.dialog('/myPaths', [
+    function (session) {
 
-// Dialog for myquestions 
-bot.dialog('myPaths', function (session) {
+        session.send("Your paths: ");
 
-    session.send("Your paths: ");
+        var cursor = collPaths.find({"UserID": UserID});
+        var result = [];
+        cursor.each(function(err, doc) {
+            if(err)
+                throw err;
+            if (doc === null) {
+                // doc is null when the last document has been processed
 
-    var cursor = collPaths.find({"UserID": UserID});
-    var result = [];
-    cursor.each(function(err, doc) {
-        if(err)
-            throw err;
-        if (doc === null) {
-            // doc is null when the last document has been processed
+                result.sort(function(a, b){
+                var dateA=new Date(a.CreatedTime), dateB=new Date(b.CreatedTime)
+                //return dateB-dateA //sort by date ascending
+                return dateA-dateB //sort by date decending
+                })
 
-            result.sort(function(a, b){
-            var dateA=new Date(a.CreatedTime), dateB=new Date(b.CreatedTime)
-            //return dateB-dateA //sort by date ascending
-            return dateA-dateB //sort by date decending
-            })
+                
+                session.send(result);
+                return;
+            }
+            // do something with each doc, like push Email into a results array
+            result.push(doc);
+        });        
+
+       // builder.Prompts.choice(session, "Would you like to add another answers?", ["Yes", "Review My Paths", "No"]);
+
+       // builder.Prompts.choice(session, "Which region would you like sales for?", salesData); 
+    },
+    function (session, results) {
+
 
             
-            session.send(result);
-            return;
-        }
-        // do something with each doc, like push Email into a results array
-        result.push(doc);
-    });
+    }
+]);
 
-    
-});
+
 
 
 
