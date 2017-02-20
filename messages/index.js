@@ -588,11 +588,11 @@ bot.dialog('/myPaths', [
             if (doc === null) {
                 // doc is null when the last document has been processed
 
-                result.sort(function(a, b){
-                var dateA=new Date(a.CreatedTime), dateB=new Date(b.CreatedTime)
+           //     result.sort(function(a, b){
+            //    var dateA=new Date(a.CreatedTime), dateB=new Date(b.CreatedTime)
                 //return dateB-dateA //sort by date ascending
-                return dateA-dateB //sort by date decending
-                })
+          //      return dateA-dateB //sort by date decending
+           //     })
 
                 
                 session.send(result);
