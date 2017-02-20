@@ -515,7 +515,7 @@ bot.dialog('/pathNew_Prompts_Answers', [
             
             collOpts.insert(OptRecord, function(err, result){
 
-                OptID = result._id;
+                //var OptID = result._id;
 
                 nAnswersCounter = nAnswersCounter + 1;
 
