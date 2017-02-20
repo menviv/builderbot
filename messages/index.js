@@ -532,7 +532,7 @@ bot.dialog('/pathNew_Prompts_Answers', [
         }
     }
 ]).beginDialogAction('pathNew_PromptsAction', 'pathNew_Prompts', { matches: /new/i })
-  .beginDialogAction('myPathsAction', 'myPaths', { matches: /paths/i });
+  .beginDialogAction('pathsAction', 'myPaths', { matches: /paths/i });
 
 
 // Dialog for myquestions 
