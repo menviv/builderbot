@@ -110,13 +110,6 @@ bot.dialog('/dddd', function (session) {
 
 
 
-
-
-
-
-
-
-
 bot.dialog('/', [
     function (session) {
 
@@ -197,7 +190,7 @@ bot.dialog('/', [
 
 
         function NonRegisteredUser() {
-
+            /*
             var UserRecord = {
                 'CreatedTime': LogTimeStame,
                 'CreatedBy':'admin',
@@ -213,11 +206,13 @@ bot.dialog('/', [
 
                 UserID = result._id;
 
-                session.send("New user created: " + UserID);
+                session.send("New user created: " + result._id);
 
                 //session.userData.email = UserEmail;
 
             });
+
+            */
 
             builder.Prompts.text(session, "And you name?"); 
 
@@ -249,6 +244,8 @@ bot.dialog('/', [
 
         session.userData.goal = UserGoal;
 
+        RegisterNewUser();
+
         function RegisterNewUser() {
 
             var UserRecord = {
@@ -267,6 +264,8 @@ bot.dialog('/', [
                 UserID = responseDoc._id;
 
                 session.userData.userid = responseDoc._id;
+
+                session.send("New user created: " + responseDoc._id);
                 //session.send("Got it... " + result.length);
 
             });
@@ -283,7 +282,7 @@ bot.dialog('/', [
         }
 
 
-        RegisterNewUser();
+        
 
         
 
