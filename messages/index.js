@@ -462,6 +462,8 @@ bot.dialog('/pathNew_Prompts', [
 
                 PathID = result._id;
 
+                session.send("New user created: " + PathID);
+
             });
 
             session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding 3-4 possibilities..."); 
