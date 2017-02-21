@@ -132,7 +132,7 @@ bot.dialog('/dddd', function (session) {
                             UserName = result[0].UserName;
                             UserGoal = result[0].UserGoal;
                             UserID = result[0]._id;
-                            session.userData.userid = UserID;
+                           // session.userData.userid = UserID;
 
                         }
                         
@@ -301,7 +301,7 @@ bot.dialog('/', [
 
                // UserID = result._id;
 
-                //session.userData.userid = result._id;
+                session.userData.userid = result._id;
 
                 AllocateUserData();
 
