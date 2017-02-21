@@ -654,7 +654,7 @@ bot.dialog('/myPaths', [
 
                    HTMLresponse += "<div class='DialogChatbotPath'>" + result[i].ObjectTxt + "</div>";
 
-                   //session.send("results: " + result[i].ObjectTxt);
+                   session.send("results: " + HTMLresponse);
 
                }
 
