@@ -50,7 +50,7 @@ var bot = new builder.UniversalBot(connector);
 var UserEmail;
 var UserName;
 var UserGoal;
-var UserID;
+var UserID = 'default';
 var PathID;
 var nAnswersCounter = parseInt("1");
 
@@ -261,7 +261,7 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){
 
-                UserID = result._id;
+               // UserID = result._id;
 
                 session.userData.userid = result._id;
 
@@ -270,7 +270,14 @@ bot.dialog('/', [
 
             });
 
-            
+            collUsers.insert(UserRecord, {w: 1}, function(err, records){
+                UserID = records[0]._id;
+                console.log("Record added as "+records[0]._id);
+            });
+
+            session.send("New user created1: " + UserID);
+
+            session.send("New user created1: " + session.userData.userid);
 
             session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
 
