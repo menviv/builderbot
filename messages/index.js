@@ -261,9 +261,9 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, responseDoc){
 
-                UserID = responseDoc._id;
+                UserID = responseDoc[0]._id;
 
-                session.userData.userid = responseDoc._id;
+                session.userData.userid = responseDoc[0]._id;
 
                 session.send("New user created: " + UserID);
                 //session.send("Got it... " + result.length);
