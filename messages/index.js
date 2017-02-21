@@ -265,7 +265,7 @@ bot.dialog('/', [
 
                 session.userData.userid = result._id;
 
-                session.send("New user created: " + UserID);
+                session.send("New user created: " + result);
                 //session.send("Got it... " + result.length);
 
             });
