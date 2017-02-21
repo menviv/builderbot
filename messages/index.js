@@ -494,9 +494,12 @@ bot.dialog('/pathNew_Prompts', [
 
         if (results.response) {
 
+            PathID = new mongo.ObjectID(); 
+
             var PathRecord = {
                 'CreatedTime': LogTimeStame,
-                'UserID': session.userData.userid,
+                'UserID': UserID,
+                '_id': PathID;
                 'CreatedBy':UserName,
                 'CreatedByEmail':UserEmail,
                 'ObjectType':'CloseQuestions',
@@ -507,11 +510,13 @@ bot.dialog('/pathNew_Prompts', [
             
             collPaths.insert(PathRecord, function(err, result){
 
-                PathID = result._id;
+                //PathID = result._id;
 
                 session.send("New user created: " + PathID);
 
             });
+
+            session.send("New user created2: " + PathID);
 
             session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding 3-4 possibilities..."); 
 
