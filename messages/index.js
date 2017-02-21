@@ -127,7 +127,7 @@ bot.dialog('/dddd', function (session) {
 
                         } else {
 
-                            UserExistsByEmail();
+                           // UserExistsByEmail();
 
                             UserName = result[0].UserName;
                             UserGoal = result[0].UserGoal;
