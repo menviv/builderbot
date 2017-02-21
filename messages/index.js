@@ -259,11 +259,11 @@ bot.dialog('/', [
                 'Status':'draft'
             }    	
             
-            collUsers.insert(UserRecord, function(err, responseDoc){
+            collUsers.insert(UserRecord, function(err, result){
 
-                UserID = responseDoc[0]._id;
+                UserID = result._id;
 
-                session.userData.userid = responseDoc[0]._id;
+                session.userData.userid = result._id;
 
                 session.send("New user created: " + UserID);
                 //session.send("Got it... " + result.length);
