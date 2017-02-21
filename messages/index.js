@@ -641,7 +641,7 @@ bot.dialog('/myPaths', [
                 
                // session.send(result);
 
-               var stream = fs.createWriteStream("myPaths.html");
+               //var stream = fs.createWriteStream("myPaths.html");
 
                var nresultLen = result.length;
 
@@ -660,11 +660,16 @@ bot.dialog('/myPaths', [
 
              //  session.send("gfhdsgfhdsgfgdhsgfghds");
 
-                stream.once('open', function(fd) {
-                    stream.write("<html><head><title>My Paths for ChatBot</title></head><body><div class='DialogTitle'>My chatbot paths</div><div class='DialogChatbot' id='ChatBotBody'>\n");
-                    stream.write(HTMLresponse);
-                    stream.write("</div></body></html>\n");
-                    stream.end();
+             //   stream.once('open', function(fd) {
+             //       stream.write("<html><head><title>My Paths for ChatBot</title></head><body><div class='DialogTitle'>My chatbot paths</div><div class='DialogChatbot' id='ChatBotBody'>\n");
+             //       stream.write(HTMLresponse);
+             //       stream.write("</div></body></html>\n");
+             //       stream.end();
+             //   });
+
+                fs.writeFile('\myPathsHTML.html', HTMLresponse, function (err) {
+                    if (err) return console.log(err);
+                    console.log('Hello World > helloworld.txt');
                 });
 
 
