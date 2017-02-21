@@ -7,6 +7,7 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var moment = require('moment');
+var fs = require('fs');
 var DateFormat = "DD-MM-YYYY HH:mm:ss";
 var LogTimeStame = moment().format(DateFormat); 
 
@@ -510,13 +511,7 @@ bot.dialog('/pathNew_Prompts', [
             
             collPaths.insert(PathRecord, function(err, result){
 
-                //PathID = result._id;
-
-                session.send("New user created: " + PathID);
-
             });
-
-            session.send("New user created2: " + PathID);
 
             session.send("Now, let's define the optional answer choices. We advice to refrain from exceeding 3-4 possibilities..."); 
 
@@ -646,15 +641,34 @@ bot.dialog('/myPaths', [
                 
                // session.send(result);
 
+               var stream = fs.createWriteStream("myPaths.html");
+
                var nresultLen = result.length;
+
+               var HTMLcode = "<html><head><title>My Paths for ChatBot</title></head><body><div class='DialogTitle'>My chatbot paths</div><div class='DialogChatbot' id='ChatBotBody'></div></body></html>";
+
+               var HTMLresponse;
+
 
                for (var i=0; i<nresultLen; i++ ) {
 
-                   session.send("results: " + result[i].ObjectTxt);
+                   HTMLresponse += "<div class='DialogChatbotPath'>" + result[i].ObjectTxt + "</div>";
+
+                   //session.send("results: " + result[i].ObjectTxt);
 
                }
 
              //  session.send("gfhdsgfhdsgfgdhsgfghds");
+
+                stream.once('open', function(fd) {
+                    stream.write("<html><head><title>My Paths for ChatBot</title></head><body><div class='DialogTitle'>My chatbot paths</div><div class='DialogChatbot' id='ChatBotBody'>\n");
+                    stream.write(HTMLresponse);
+                    stream.write("</div></body></html>\n");
+                    stream.end();
+                });
+
+
+
                 return;
             }
             // do something with each doc, like push Email into a results array
