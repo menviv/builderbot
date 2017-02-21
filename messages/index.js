@@ -286,6 +286,8 @@ bot.dialog('/', [
 
         function RegisterNewUser() {
 
+            var result = [];
+
             var UserRecord = {
                 'CreatedTime': LogTimeStame,
                 'CreatedBy':'admin',
@@ -299,14 +301,14 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){
 
-               // UserID = result._id;
+                UserID = result._id;
 
                 session.userData.userid = result._id;
 
-                AllocateUserData();
+                //AllocateUserData();
 
                // session.send("New user created: " + result);
-                //session.send("Got it... " + result.length);
+               session.send("Got it... " + UserID);
 
             });
 
