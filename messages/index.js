@@ -272,12 +272,13 @@ bot.dialog('/', [
 
             collUsers.insert(UserRecord, {w: 1}, function(err, records){
                 UserID = records[0]._id;
+                session.userData.userid = records[0]._id;
                 console.log("Record added as "+records[0]._id);
             });
 
             session.send("New user created1: " + UserID);
 
-            session.send("New user created1: " + session.userData.userid);
+            session.send("New user created2: " + session.userData.userid);
 
             session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
 
