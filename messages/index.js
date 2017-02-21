@@ -286,10 +286,13 @@ bot.dialog('/', [
 
         function RegisterNewUser() {
 
-            var result = [];
+            UserID = new mongo.ObjectID(); 
+
+            session.send("Got it... " + UserID);
 
             var UserRecord = {
                 'CreatedTime': LogTimeStame,
+                '_id': UserID,
                 'CreatedBy':'admin',
                 'ObjectType':'UserRecord',
                 'UserName':UserName,
@@ -301,14 +304,12 @@ bot.dialog('/', [
             
             collUsers.insert(UserRecord, function(err, result){
 
-                UserID = result._id;
-
-                session.userData.userid = result._id;
+                session.userData.userid = UserID;
 
                 //AllocateUserData();
 
                // session.send("New user created: " + result);
-               session.send("Got it... " + UserID);
+               
 
             });
 
