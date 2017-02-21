@@ -499,7 +499,7 @@ bot.dialog('/pathNew_Prompts', [
             var PathRecord = {
                 'CreatedTime': LogTimeStame,
                 'UserID': UserID,
-                '_id': PathID;
+                '_id': PathID,
                 'CreatedBy':UserName,
                 'CreatedByEmail':UserEmail,
                 'ObjectType':'CloseQuestions',
