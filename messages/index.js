@@ -110,6 +110,44 @@ bot.dialog('/dddd', function (session) {
 
 
 
+
+        function AllocateUserData() {
+                
+                var cursor = collUsers.find({"UserEmail": UserEmail});
+                var result = [];
+                cursor.each(function(err, doc) {
+                    if(err)
+                        throw err;
+                    if (doc === null) {
+                        // doc is null when the last document has been processed
+
+                        if (result.length < 1) {
+
+                            NonRegisteredUser();
+
+                        } else {
+
+                            UserExistsByEmail();
+
+                            UserName = result[0].UserName;
+                            UserGoal = result[0].UserGoal;
+                            UserID = result[0]._id;
+                            session.userData.userid = UserID;
+
+                        }
+                        
+                        return;
+                    }
+                    // do something with each doc, like push Email into a results array
+                    result.push(doc);
+                });
+            
+        }
+
+
+
+
+
 bot.dialog('/', [
     function (session) {
 
@@ -263,22 +301,20 @@ bot.dialog('/', [
 
                // UserID = result._id;
 
-                session.userData.userid = result._id;
+                //session.userData.userid = result._id;
 
-                session.send("New user created: " + result);
+                AllocateUserData();
+
+               // session.send("New user created: " + result);
                 //session.send("Got it... " + result.length);
 
             });
 
-            collUsers.insert(UserRecord, {w: 1}, function(err, records){
-                UserID = records[0]._id;
-                session.userData.userid = records[0]._id;
-                console.log("Record added as "+records[0]._id);
-            });
 
-            session.send("New user created1: " + UserID);
 
-            session.send("New user created2: " + session.userData.userid);
+            //session.send("New user created1: " + UserID);
+
+            //session.send("New user created2: " + session.userData.userid);
 
             session.send("Thank you for sharing this information with me. Ready to start your first bot?"); 
 
