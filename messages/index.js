@@ -667,7 +667,7 @@ bot.dialog('/myPaths', [
              //       stream.end();
              //   });
 
-                fs.writeFile('\myPathsHTML.html', HTMLresponse, function (err) {
+                fs.writeFile('/messages/myPathsHTML.html', HTMLresponse, function (err) {
                     if (err) return console.log(err);
                     console.log('Hello World > helloworld.txt');
                 });
