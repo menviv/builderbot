@@ -4,7 +4,6 @@ For a complete walkthrough of creating this type of bot see the article at
 https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 -----------------------------------------------------------------------------*/
 "use strict";
-var restify = require('restify');
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var moment = require('moment');
@@ -241,17 +240,11 @@ bot.dialog('/', [
             }    	
             
             collUsers.insert(UserRecord, function(err, result){
-
                 //session.userData.userid = result._id;
-
                 UserID = result._id;
-
                 session.send("New user created: " + result._id);
-
                 //session.userData.email = UserEmail;
-
             });
-
             */
 
             builder.Prompts.text(session, "And you name?"); 
