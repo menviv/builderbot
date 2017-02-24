@@ -66,11 +66,7 @@ var PathID;
 var nAnswersCounter = parseInt("1");
 
 
-// Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
+
 
 
 server.post('/api/notify', function (req, res) {
