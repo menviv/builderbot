@@ -7,15 +7,6 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var restify = require('restify');
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
-
-
-
-
-
-
-
-
-
 var moment = require('moment');
 var fs = require('fs');
 var DateFormat = "DD-MM-YYYY HH:mm:ss";
@@ -64,26 +55,6 @@ var UserGoal;
 var UserID = 'default';
 var PathID;
 var nAnswersCounter = parseInt("1");
-
-
-
-
-
-server.post('/api/notify', function (req, res) {
-    // Process posted notification
-    var address = JSON.parse(req.body.address);
-    var notification = req.body.notification;
-
-    // Send notification as a proactive message
-    var msg = new builder.Message()
-        .address(address)
-        .text(notification);
-    bot.send(msg, function (err) {
-        // Return success/failure
-        res.status(err ? 500 : 200);
-        res.end();
-    });
-});
 
 
 
